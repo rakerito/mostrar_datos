@@ -1,16 +1,13 @@
 import flet as ft
-from typing import Any
-from app.services.transacciones_api_productos import list_products, get_product, create_product, update_product, delete_product
-from app.components.popup import show_popup, show_popup_auto_close, show_snackbar, confirm_dialog
-from app.components.error import ApiError, api_error_to_text
-from app.styles.estilos import Colors, Textos_estilos, Card
+from app.services.transacciones_api_productos import list_products
+from app.styles.estilos import Colors, Textos_estilos
 
 def products_view(page: ft.Page) -> ft.Control:
-    rows_data: list[dict[str, Any]] = []
-    total_items = 0
     total_text = ft.Text("Total de productos: (cargando...)", style=Textos_estilos.H4)
-    
-    # Encabezados (Imagen 1)
+
+    productos = list_products()
+
+   
     columnas = [
         ft.DataColumn(label=ft.Text("Nombre", style=Textos_estilos.H4)),
         ft.DataColumn(label=ft.Text("Cantidad", style=Textos_estilos.H4)),
@@ -18,30 +15,50 @@ def products_view(page: ft.Page) -> ft.Control:
         ft.DataColumn(label=ft.Text("Min", style=Textos_estilos.H4)),
         ft.DataColumn(label=ft.Text("Max", style=Textos_estilos.H4)),
     ]
-    
-    # Se definen las filas de la tabla (Imagen 2)
+
     data = []
-    data.append(
-        ft.DataRow(
-            cells=[
-                ft.DataCell(ft.Text("nombre1...")),
-                ft.DataCell(ft.Text("cantidad1...")),
-                ft.DataCell(ft.Text("ingreso1...")),
-                ft.DataCell(ft.Text("min1...")),
-                ft.DataCell(ft.Text("max1...")),
-            ]
+
+    for p in productos:
+        data.append(
+            ft.DataRow(
+                cells=[
+                    ft.DataCell(ft.Text(p["name"])),
+                    ft.DataCell(ft.Text("0")),  # 👈 valor simulado
+                    ft.DataCell(ft.Text(str(p["price"]))),  # usamos price como ingreso
+                    ft.DataCell(ft.Text("0")),  # 👈 simulado
+                    ft.DataCell(ft.Text("0")),  # 👈 simulado
+                ]
+            )
         )
-    )
+
     
-    # Se crea la tabla con estilos (Imagen 2 e Imagen 6)
+
+    total_text = ft.Container(
+    content=ft.Text(f"Total de productos: {len(productos)} ", style=Textos_estilos.H4),
+    bgcolor="blue",  
+    padding=10,
+    border_radius=10
+)
+
     tabla = ft.DataTable(
         columns=columnas,
         rows=data,
         width=900,
         heading_row_height=60,
-        heading_row_color=Colors.BG, # Aplica el fondo oscuro de la Imagen 6
+        heading_row_color=Colors.BG,
         data_row_max_height=60,
         data_row_min_height=48
     )
+
     
-    return tabla
+    contenido = ft.Column(
+        spacing=20,
+        scroll=ft.ScrollMode.AUTO,
+        height=400,
+        controls=[
+            total_text,
+            tabla
+        ]
+    )
+
+    return contenido

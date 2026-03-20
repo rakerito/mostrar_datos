@@ -23,7 +23,6 @@ def show_popup(page: ft.Page, title: str, content: str):
     page.update()
 
 def show_popup_auto_close(page: ft.Page, title: str, content: str):
-    # Versión simplificada para cumplir con la importación
     show_popup(page, title, content)
 
 def confirm_dialog(page: ft.Page, title: str, message: str, on_confirm):

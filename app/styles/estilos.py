@@ -7,7 +7,6 @@ class Colors:
     SECONDARY = "#1e1e1e"
 
 class Textos_estilos:
-    # Definido para cumplir con la imagen del profesor
     H4 = ft.TextStyle(
         size=16, 
         weight=ft.FontWeight.BOLD, 
