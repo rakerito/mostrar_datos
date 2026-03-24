@@ -18,7 +18,7 @@ class Card(ft.Container):
         super().__init__(
             content=content,
             padding=20,
-            bgcolor=Colors.SECONDARY,
+            bgcolor="white",
             border_radius=10,
-            border=ft.border.all(1, "#3f4248")
+            border=ft.Border.all(1, "#e4ecfe")
         )

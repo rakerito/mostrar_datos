@@ -1,6 +1,6 @@
 import flet as ft
 from app.services.transacciones_api_productos import list_products
-from app.styles.estilos import Colors, Textos_estilos
+from app.styles.estilos import Card, Colors, Textos_estilos
 
 def products_view(page: ft.Page) -> ft.Control:
     total_text = ft.Text("Total de productos: (cargando...)", style=Textos_estilos.H4)
@@ -61,4 +61,18 @@ def products_view(page: ft.Page) -> ft.Control:
         ]
     )
 
-    return contenido
+    # return contenido
+
+    tarjeta = Card(contenido)
+
+    #return tarjeta
+
+    # return tarjeta
+
+    final = ft.Container(
+        expand=True,
+        alignment=ft.Alignment(0, -1),
+        content=tarjeta
+    )
+
+    return final
